@@ -5,6 +5,7 @@
 #include <vector>
 using namespace std;
 const int XTAM=3,YTAM=3;
+const int NUM_FICHAS=2;
 
 class Util{
   public:

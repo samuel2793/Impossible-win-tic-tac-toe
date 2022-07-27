@@ -9,7 +9,7 @@ using namespace std;
 class Bot{
   public:
     void copiarTablero(char tablero[XTAM][YTAM],char tablero2[XTAM][YTAM]);
-    void comprobarVictoriaBot(char tablero[XTAM][YTAM]);
+    void comprobarVictoriaBotUser(char tablero[XTAM][YTAM]);
     void hazLoTuyo(char tablero[XTAM][YTAM]);
 };
 

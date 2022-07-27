@@ -23,7 +23,6 @@ void turnoJugador(char tablero[XTAM][YTAM]){
     Util util;
     char pos='a';
     do{
-        mostrarTablero(tablero);
         cout<<"Donde la ponemos master? (Introduce un numero del 1 al 9): ";
         cin>>pos;
     }while(!util.dentro(tablero,pos));
@@ -50,11 +49,14 @@ int main()
         getline(cin,aux);
     }while(aux!="");
     cout<<"VAMOS"<<endl;
-    
+    mostrarTablero(tablero);
     do{
         turnoJugador(tablero);
-        if(!util.terminado(tablero))
+        mostrarTablero(tablero);
+        if(!util.terminado(tablero)){
             turnoBot(tablero);
+            mostrarTablero(tablero);
+        }
     }while(!util.terminado(tablero));
 
     mostrarTablero(tablero);
