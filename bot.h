@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <vector>
-const int XTAM=3,YTAM=3;
+#include "util.h"
 using namespace std;
 
 class Bot{
   public:
+    void copiarTablero(char tablero[XTAM][YTAM],char tablero2[XTAM][YTAM]);
+    void comprobarVictoriaBot(char tablero[XTAM][YTAM]);
     void hazLoTuyo(char tablero[XTAM][YTAM]);
 };
 
