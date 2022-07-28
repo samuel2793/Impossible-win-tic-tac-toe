@@ -32,6 +32,25 @@ void Bot::comprobarVictoriaBotUser(char tablero[XTAM][YTAM]){
     }
 }
 
+int Bot::dondePonerla(char tablero[XTAM][YTAM]){
+    char tableroPruebas[XTAM][YTAM];
+    Util util;
+    int max=0;    //primeros digitos la puntacion y el ultimo la posicion del 1 al 9
+    copiarTablero(tablero,tableroPruebas);
+    for(int i=1;i<=9;i++){
+        if(tablero[util.traducir1to2(i).first][util.traducir1to2(i).second]==' '){
+            tableroPruebas[util.traducir1to2(i).first][util.traducir1to2(i).second]='O';
+            if(dondePonerla(tableroPruebas)/10 > max/10)
+                max=dondePonerla(tableroPruebas);
+        }
+    }
+    return max;
+}
+
 void Bot::hazLoTuyo(char tablero[XTAM][YTAM]){
+    Util util;
+    int pos;
     comprobarVictoriaBotUser(tablero);
+    pos=dondePonerla(tablero)%10;
+    tablero[util.traducir1to2(pos).first][util.traducir1to2(pos).second]='O';
 }

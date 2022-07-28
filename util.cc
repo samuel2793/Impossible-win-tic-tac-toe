@@ -1,5 +1,7 @@
 #include "util.h"
 
+
+
 bool Util::terminado(char tablero[XTAM][YTAM]){
     //HORIZONTALES
     if(tablero[0][0]==tablero[0][1] && tablero[0][0]==tablero[0][2] && tablero[0][0]!=' ')
@@ -27,7 +29,7 @@ bool Util::terminado(char tablero[XTAM][YTAM]){
     return false;
 }
 
-pair<int,int> Util::traducir(char pos){
+pair<int,int> Util::traducir1to2(char pos){
     pair <int,int> pos2;
     switch(pos){
         case '1':
@@ -71,8 +73,55 @@ pair<int,int> Util::traducir(char pos){
     return pos2;
 }
 
+char Util::traducir2to1(char x,char y){
+    char pos[2]={x,y};
+    char pos2;
+    switch(pos[0]){
+        case '0':
+            switch(pos[1]){
+                case '0':
+                    pos2='1';
+                    break;
+                case '1':
+                    pos2='2';
+                    break;
+                case '2':
+                    pos2='3';
+                    break;
+            }
+            break;
+        case '1':
+            switch(pos[1]){
+                case '0':
+                    pos2='4';
+                    break;
+                case '1':
+                    pos2='5';
+                    break;
+                case '2':
+                    pos2='6';
+                    break;
+            }
+            break;
+        case '2':
+            switch(pos[1]){
+                case '0':
+                    pos2='7';
+                    break;
+                case '1':
+                    pos2='8';
+                    break;
+                case '2':
+                    pos2='9';
+                    break;
+            }
+            break;
+    }
+    return pos2;
+}
+
 bool Util::dentro(char tablero[XTAM][YTAM],char pos){
-    int posX=traducir(pos).first,posY=traducir(pos).second;
+    int posX=traducir1to2(pos).first,posY=traducir1to2(pos).second;
     if(posX<XTAM && posY<YTAM && posX>=0 && posY>=0){
         if(tablero[posX][posY]==' ')
             return true;

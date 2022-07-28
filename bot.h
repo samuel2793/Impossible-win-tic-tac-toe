@@ -11,6 +11,7 @@ class Bot{
     void copiarTablero(char tablero[XTAM][YTAM],char tablero2[XTAM][YTAM]);
     void comprobarVictoriaBotUser(char tablero[XTAM][YTAM]);
     void hazLoTuyo(char tablero[XTAM][YTAM]);
+    int dondePonerla(char tablero[XTAM][YTAM]);
 };
 
 #endif
