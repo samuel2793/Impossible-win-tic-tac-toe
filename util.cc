@@ -1,32 +1,30 @@
 #include "util.h"
 
-
-
-bool Util::terminado(char tablero[XTAM][YTAM]){
+pair<bool,char> Util::ganado(char tablero[XTAM][YTAM]){
     //HORIZONTALES
     if(tablero[0][0]==tablero[0][1] && tablero[0][0]==tablero[0][2] && tablero[0][0]!=' ')
-        return true;
+        return {true,tablero[0][0]};
     if(tablero[1][0]==tablero[1][1] && tablero[1][0]==tablero[1][2] && tablero[1][0]!=' ')
-        return true;
+        return {true,tablero[1][0]};
     if(tablero[2][0]==tablero[2][1] && tablero[2][0]==tablero[2][2] && tablero[2][0]!=' ')
-        return true;
+        return {true,tablero[2][0]};
     
     //VERTICALES
     if(tablero[0][0]==tablero[1][0] && tablero[0][0]==tablero[2][0] && tablero[0][0]!=' ')
-        return true;
+        return {true,tablero[0][0]};
     if(tablero[0][1]==tablero[1][1] && tablero[0][1]==tablero[2][1] && tablero[0][1]!=' ')
-        return true;
+        return {true,tablero[0][1]};
     if(tablero[0][2]==tablero[1][2] && tablero[0][2]==tablero[2][2] && tablero[0][2]!=' ')
-        return true;
+        return {true,tablero[0][2]};
 
     //DIAGONALES
     if(tablero[0][0]==tablero[1][1] && tablero[0][0]==tablero[2][2] && tablero[0][0]!=' ')
-        return true;
+        return {true,tablero[0][0]};
     if(tablero[0][2]==tablero[1][1] && tablero[0][2]==tablero[2][0] && tablero[0][2]!=' ')
-        return true;
+        return {true,tablero[0][2]};
     
 
-    return false;
+    return {false,'N'};
 }
 
 pair<int,int> Util::traducir1to2(char pos){
@@ -118,6 +116,17 @@ char Util::traducir2to1(char x,char y){
             break;
     }
     return pos2;
+}
+
+bool Util::lleno(char tablero[XTAM][YTAM]){
+    bool lleno=true;
+    for (int i = 0;i < XTAM;i++){
+        for (int j = 0;j<YTAM;j++){
+            if(tablero[i][j]==' ')
+                lleno=false;
+        }
+    }
+    return lleno;
 }
 
 bool Util::dentro(char tablero[XTAM][YTAM],char pos){

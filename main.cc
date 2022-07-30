@@ -26,7 +26,7 @@ void turnoJugador(char tablero[XTAM][YTAM]){
         cout<<"Donde la ponemos master? (Introduce un numero del 1 al 9): ";
         cin>>pos;
     }while(!util.dentro(tablero,pos));
-    tablero[util.traducir1to2(pos).first][util.traducir1to2(pos).second]='X';
+    tablero[util.traducir1to2(pos).first][util.traducir1to2(pos).second]=FICHA_USER;
 }
 
 void turnoBot(char tablero[XTAM][YTAM]){
@@ -53,13 +53,17 @@ int main()
     do{
         turnoJugador(tablero);
         mostrarTablero(tablero);
-        if(!util.terminado(tablero)){
+        if(!util.ganado(tablero).first){
             turnoBot(tablero);
             mostrarTablero(tablero);
         }
-    }while(!util.terminado(tablero));
+    }while(!util.ganado(tablero).first && !util.lleno(tablero));
 
     mostrarTablero(tablero);
-
+    if(util.ganado(tablero).first)
+        cout<<"HA GANADO: "<<util.ganado(tablero).second;
+    else
+        cout<<"EMPATE";
+    cout<<endl;
     return 0;
 }

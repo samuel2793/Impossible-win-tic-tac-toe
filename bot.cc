@@ -9,11 +9,10 @@ void Bot::copiarTablero(char tablero[XTAM][YTAM],char tablero2[XTAM][YTAM]){
     }
 }
 
-void Bot::comprobarVictoriaBotUser(char tablero[XTAM][YTAM]){
-    Util util;
+bool Bot::comprobarVictoriaBotUser(char tablero[XTAM][YTAM],char fichaC){
     char tableroModificado[XTAM][YTAM];
     bool ganado=false;
-    char ficha[NUM_FICHAS]={'O','X'};
+    char ficha[NUM_FICHAS]={FICHA_IA,FICHA_USER};
 
     for(int cont = 0;cont <NUM_FICHAS;cont++){
         for(int i = 0;i < XTAM && !ganado;i++){
@@ -21,8 +20,8 @@ void Bot::comprobarVictoriaBotUser(char tablero[XTAM][YTAM]){
                 if(tablero[i][j]==' '){
                     copiarTablero(tablero,tableroModificado);
                     tableroModificado[i][j]=ficha[cont];
-                    if(util.terminado(tableroModificado)){
-                        tableroModificado[i][j]='O';
+                    if(util.ganado(tableroModificado).first){
+                        tableroModificado[i][j]=fichaC;
                         ganado=true;
                         copiarTablero(tableroModificado,tablero);
                     }
@@ -30,27 +29,54 @@ void Bot::comprobarVictoriaBotUser(char tablero[XTAM][YTAM]){
             }
         }
     }
+    return ganado;
+}
+
+int Bot::puntuacionPosicion(char tablero[XTAM][YTAM],char pos,int punt){
+    if(util.ganado(tablero).first){
+        if(util.ganado(tablero).second==FICHA_USER)
+            punt-=1;
+        else
+            punt+=1;
+    }
+    else if(util.lleno(tablero)){
+        punt=+0;
+    }
+    else{
+        for(int i=1;i<=9;i++){
+            if(tablero[util.traducir1to2(i+'0').first][util.traducir1to2(i+'0').second]==' '){
+                pos=i;
+                break;
+            }
+        }
+        punt+=puntuacionPosicion(tablero,pos,punt);
+    }
+
+    return punt;
 }
 
 int Bot::dondePonerla(char tablero[XTAM][YTAM]){
+    int max=-1;
+    int pos=-1;
+    int nuevaPuntuacion;
     char tableroPruebas[XTAM][YTAM];
-    Util util;
-    int max=0;    //primeros digitos la puntacion y el ultimo la posicion del 1 al 9
-    copiarTablero(tablero,tableroPruebas);
     for(int i=1;i<=9;i++){
-        if(tablero[util.traducir1to2(i).first][util.traducir1to2(i).second]==' '){
-            tableroPruebas[util.traducir1to2(i).first][util.traducir1to2(i).second]='O';
-            if(dondePonerla(tableroPruebas)/10 > max/10)
-                max=dondePonerla(tableroPruebas);
+        if(tablero[util.traducir1to2(i+'0').first][util.traducir1to2(i+'0').second]==' '){
+            copiarTablero(tablero,tableroPruebas);  // tablero nuevo para cada calculo
+            nuevaPuntuacion=puntuacionPosicion(tableroPruebas,i+'0',0);
+            if(max<nuevaPuntuacion){
+                max=nuevaPuntuacion;
+                pos=i;
+            }
         }
     }
-    return max;
+    return pos;
 }
 
 void Bot::hazLoTuyo(char tablero[XTAM][YTAM]){
-    Util util;
-    int pos;
-    comprobarVictoriaBotUser(tablero);
-    pos=dondePonerla(tablero)%10;
-    tablero[util.traducir1to2(pos).first][util.traducir1to2(pos).second]='O';
+    //char pos;
+    if(!comprobarVictoriaBotUser(tablero,FICHA_IA)){
+        //pos=dondePonerla(tablero)+'0';
+        //tablero[util.traducir1to2(pos).first][util.traducir1to2(pos).second]=FICHA_IA;
+    }
 }
