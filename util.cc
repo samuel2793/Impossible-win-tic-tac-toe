@@ -138,3 +138,21 @@ bool Util::dentro(char tablero[XTAM][YTAM],char pos){
             return false;
     }else return false;
 }
+
+char Util::comprobarTurno(char tablero[XTAM][YTAM]){
+    int user=0,ia=0;
+    for(int i=1;i<=9;i++){
+        if(tablero[traducir1to2(i+'0').first][traducir1to2(i+'0').second]==FICHA_USER)
+            user++;
+        else if(tablero[traducir1to2(i+'0').first][traducir1to2(i+'0').second]==FICHA_IA)
+            ia++;
+    }
+
+    if(user>ia)
+        return FICHA_IA;
+    else if(user<ia)
+        return FICHA_USER;
+    else
+        return FICHA_FIRST;
+    
+}

@@ -33,6 +33,7 @@ bool Bot::comprobarVictoriaBotUser(char tablero[XTAM][YTAM],char fichaC){
 }
 
 int Bot::puntuacionPosicion(char tablero[XTAM][YTAM],char pos,int punt){
+    tablero[util.traducir1to2(pos+'0').first][util.traducir1to2(pos+'0').second]=util.comprobarTurno(tablero);
     if(util.ganado(tablero).first){
         if(util.ganado(tablero).second==FICHA_USER)
             punt-=1;
@@ -43,13 +44,16 @@ int Bot::puntuacionPosicion(char tablero[XTAM][YTAM],char pos,int punt){
         punt=+0;
     }
     else{
-        for(int i=1;i<=9;i++){
+        /*for(int i=1;i<=9;i++){
             if(tablero[util.traducir1to2(i+'0').first][util.traducir1to2(i+'0').second]==' '){
                 pos=i;
                 break;
             }
+        }*/
+        for(int i=1;i<=9;i++){
+            if(tablero[util.traducir1to2(i+'0').first][util.traducir1to2(i+'0').second]==' ')
+                punt+=puntuacionPosicion(tablero,i+'0',punt);
         }
-        punt+=puntuacionPosicion(tablero,pos,punt);
     }
 
     return punt;
@@ -74,9 +78,12 @@ int Bot::dondePonerla(char tablero[XTAM][YTAM]){
 }
 
 void Bot::hazLoTuyo(char tablero[XTAM][YTAM]){
-    //char pos;
+    char pos;
     if(!comprobarVictoriaBotUser(tablero,FICHA_IA)){
-        //pos=dondePonerla(tablero)+'0';
-        //tablero[util.traducir1to2(pos).first][util.traducir1to2(pos).second]=FICHA_IA;
+        pos=dondePonerla(tablero)+'0';
+        if (pos!=-1)
+            tablero[util.traducir1to2(pos).first][util.traducir1to2(pos).second]=FICHA_IA;
+        else
+            cout<<"aa\n";
     }
 }
