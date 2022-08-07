@@ -32,6 +32,17 @@ bool Bot::comprobarVictoriaBotUser(char tablero[XTAM][YTAM],char fichaC){
     return ganado;
 }
 
+void Bot::simularUsuario(char tablero[XTAM][YTAM]){
+    if(comprobarVictoriaBotUser(tablero,FICHA_USER)){}
+    else{
+        for(int i=1;i<=9;i++){
+            if(tablero[util.traducir1to2(i+'0').first][util.traducir1to2(i+'0').second]==' ')
+                tablero[util.traducir1to2(i+'0').first][util.traducir1to2(i+'0').second]=FICHA_USER;
+        }
+    }
+
+}
+
 int Bot::puntuacionPosicion(char tablero[XTAM][YTAM],char pos,int punt){
     tablero[util.traducir1to2(pos+'0').first][util.traducir1to2(pos+'0').second]=util.comprobarTurno(tablero);
     if(util.ganado(tablero).first){
@@ -50,6 +61,8 @@ int Bot::puntuacionPosicion(char tablero[XTAM][YTAM],char pos,int punt){
                 break;
             }
         }*/
+        //if(util.comprobarTurno(tablero)==FICHA_USER) ME DA MAL IDK WHY
+            simularUsuario(tablero);
         for(int i=1;i<=9;i++){
             if(tablero[util.traducir1to2(i+'0').first][util.traducir1to2(i+'0').second]==' ')
                 punt+=puntuacionPosicion(tablero,i+'0',punt);
