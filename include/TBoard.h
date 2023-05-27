@@ -23,6 +23,7 @@ class TBoard
         bool isFull();
         bool isEmpty();
         bool isWinner(char);
+        void clear();
     
     friend ostream& operator<<(ostream&, const TBoard&);
 };
